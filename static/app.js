@@ -15,6 +15,10 @@ window.onload = () => {
     addIssueRow();
 };
 
+function roundDownTo(value, step) {
+    return Math.floor(value / step) * step;
+}
+
 function createDayInputs() {
     const container = document.getElementById("days");
 
@@ -123,30 +127,29 @@ function computeWeeklyIssueBudgets(totalWeeklyMinutes, issues) {
 
     let budgets = issues.map(issue => {
         const rawMinutes = totalWeeklyMinutes * (issue.weight / totalWeight);
+        const roundedMinutes = roundDownTo(rawMinutes, ROUND_TO_MINUTES);
 
         return {
             ...issue,
-            remainingMinutes: roundTo(rawMinutes, ROUND_TO_MINUTES),
-            totalBudgetMinutes: roundTo(rawMinutes, ROUND_TO_MINUTES)
+            remainingMinutes: roundedMinutes,
+            totalBudgetMinutes: roundedMinutes
         };
     });
 
-    let diff = totalWeeklyMinutes - budgets.reduce((sum, b) => sum + b.remainingMinutes, 0);
+    let allocated = budgets.reduce((sum, b) => sum + b.remainingMinutes, 0);
+    let diff = totalWeeklyMinutes - allocated;
 
-    while (diff !== 0) {
-        for (let budget of budgets) {
-            if (diff === 0) break;
+    // Add remaining minutes safely, even if not divisible by 5
+    let index = 0;
 
-            if (diff > 0) {
-                budget.remainingMinutes += ROUND_TO_MINUTES;
-                budget.totalBudgetMinutes += ROUND_TO_MINUTES;
-                diff -= ROUND_TO_MINUTES;
-            } else if (budget.remainingMinutes >= ROUND_TO_MINUTES) {
-                budget.remainingMinutes -= ROUND_TO_MINUTES;
-                budget.totalBudgetMinutes -= ROUND_TO_MINUTES;
-                diff += ROUND_TO_MINUTES;
-            }
-        }
+    while (diff > 0) {
+        const add = Math.min(ROUND_TO_MINUTES, diff);
+
+        budgets[index].remainingMinutes += add;
+        budgets[index].totalBudgetMinutes += add;
+
+        diff -= add;
+        index = (index + 1) % budgets.length;
     }
 
     return budgets;
