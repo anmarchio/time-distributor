@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time Distributor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Time Distributor</h1>
+
+    <section>
+        <h2>Weekly Work Time</h2>
+
+        <div id="days"></div>
+    </section>
+
+    <section>
+        <h2>Issues</h2>
+
+        <table id="issuesTable">
+            <thead>
+                <tr>
+                    <th>Tag</th>
+                    <th>Number</th>
+                    <th>Link</th>
+                    <th>Weight 1–5</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="issuesBody"></tbody>
+        </table>
+
+        <button onclick="addIssueRow()">Add Issue</button>
+    </section>
+
+    <section>
+        <button class="primary" onclick="generateDistribution()">Generate Distribution</button>
+        <button onclick="downloadCSV()">Download CSV</button>
+    </section>
+
+    <section>
+        <h2>Result</h2>
+        <div id="result"></div>
+    </section>
+</div>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
