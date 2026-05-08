@@ -8,8 +8,8 @@ REM Change to script directory
 cd /d %~dp0
 
 REM Optional: activate virtual environment
-IF EXIST venv\Scripts\activate.bat (
-    call venv\Scripts\activate.bat
+IF EXIST .venv\Scripts\activate.bat (
+    call .venv\Scripts\activate.bat
 )
 
 REM Install Flask if missing
