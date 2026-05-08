@@ -15,7 +15,11 @@ IF EXIST .venv\Scripts\activate.bat (
 REM Install Flask if missing
 python -m pip install flask
 
-REM Start Flask app
-python app.py
+REM Start Flask server in background
+start cmd /k python app.py
 
-pause
+REM Wait 2 seconds for server startup
+timeout /t 2 /nobreak > nul
+
+REM Open browser
+start http://127.0.0.1:5000
