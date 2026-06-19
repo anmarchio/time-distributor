@@ -19,12 +19,14 @@
     <section>
         <h2>Issues</h2>
 
+        <datalist id="jiraTags"></datalist>
+
         <table id="issuesTable">
             <thead>
                 <tr>
                     <th>Tag</th>
                     <th>Number</th>
-                    <th>Link</th>
+                    <th>Generated Link</th>
                     <th>Weight 1–5</th>
                     <th></th>
                 </tr>
@@ -46,6 +48,16 @@
     </section>
 </div>
 
+<!-- script>
+    /*window.TIME_DISTRIBUTOR_CONFIG = {
+        weekdays: {{ config.TIME_DISTRIBUTOR_WEEKDAYS | default(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']) | tojson }},
+        defaultHoursPerDay: {{ config.TIME_DISTRIBUTOR_DEFAULT_HOURS | default(8) | tojson }},
+        defaultMinutesPerDay: {{ config.TIME_DISTRIBUTOR_DEFAULT_MINUTES | default(0) | tojson }},
+        roundToMinutes: {{ config.TIME_DISTRIBUTOR_ROUND_TO_MINUTES | default(5) | tojson }},
+        jiraBaseUrl: {{ config.TIME_DISTRIBUTOR_JIRA_BASE_URL | default('https:/blackned-technologies.atlassian.net/browse/') | tojson }},
+        jiraTags: {{ config.TIME_DISTRIBUTOR_JIRA_TAGS | default(['SIDEVOPS', 'DLBOITSVM', 'REQENG']) | tojson }}
+    };*/
+</script -->
 <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
